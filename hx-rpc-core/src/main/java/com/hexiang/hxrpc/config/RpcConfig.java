@@ -23,4 +23,8 @@ public class RpcConfig {
      * 端口号
      */
     private Integer serverPort = 8080;
+    /**
+     * 是否启用moke
+     */
+    private Boolean moke = false;
 }
