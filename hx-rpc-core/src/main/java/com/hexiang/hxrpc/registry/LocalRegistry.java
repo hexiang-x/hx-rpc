@@ -2,7 +2,6 @@ package com.hexiang.hxrpc.registry;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * 本地注册中心
