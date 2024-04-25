@@ -2,10 +2,12 @@ package com.hexiang.hxrpc.proxy;
 
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import com.hexiang.hxrpc.RpcApplication;
 import com.hexiang.hxrpc.model.RpcRequest;
 import com.hexiang.hxrpc.model.RpcResponse;
 import com.hexiang.hxrpc.serializer.JdkSerializer;
 import com.hexiang.hxrpc.serializer.Serializer;
+import com.hexiang.hxrpc.serializer.SerializerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -22,7 +24,7 @@ public class ServiceProxy implements InvocationHandler {
      */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        Serializer serializer = new JdkSerializer();
+        final Serializer serializer = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerializerKey());
         RpcRequest rpcRequest = RpcRequest.builder()
                 .serviceName(method.getDeclaringClass().getName())
                 .methodName(method.getName())

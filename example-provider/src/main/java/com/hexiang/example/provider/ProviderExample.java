@@ -14,5 +14,6 @@ public class ProviderExample {
         LocalRegistry.registry(UserService.class.getName(), UserServiceImpl.class);
         HttpServer httpServer = new VertxHttpServer();
         httpServer.doStart(rpcConfig.getServerPort());
+
     }
 }

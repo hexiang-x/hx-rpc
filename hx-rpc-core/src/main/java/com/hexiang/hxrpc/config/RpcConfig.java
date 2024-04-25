@@ -1,5 +1,6 @@
 package com.hexiang.hxrpc.config;
 
+import com.hexiang.hxrpc.serializer.SerializerEnum;
 import lombok.Data;
 
 /**
@@ -27,4 +28,8 @@ public class RpcConfig {
      * 是否启用moke
      */
     private Boolean moke = false;
+    /**
+     * 序列化器
+     */
+    private String serializerKey = "Jdk";
 }

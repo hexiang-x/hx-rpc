@@ -1,10 +1,12 @@
 package com.hexiang.hxrpc.server;
 
+import com.hexiang.hxrpc.RpcApplication;
 import com.hexiang.hxrpc.model.RpcRequest;
 import com.hexiang.hxrpc.model.RpcResponse;
 import com.hexiang.hxrpc.registry.LocalRegistry;
 import com.hexiang.hxrpc.serializer.JdkSerializer;
 import com.hexiang.hxrpc.serializer.Serializer;
+import com.hexiang.hxrpc.serializer.SerializerFactory;
 import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerRequest;
@@ -25,7 +27,7 @@ public class HttpServerHandle implements Handler<HttpServerRequest> {
     @Override
     public void handle(HttpServerRequest httpServerRequest) {
         //指定反序列化器
-        final Serializer serializer = new JdkSerializer();
+        final Serializer serializer = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerializerKey());
 
         //记录日志
         System.out.println("Receive Request:" + httpServerRequest.method() + " " + httpServerRequest.uri());
@@ -70,8 +72,8 @@ public class HttpServerHandle implements Handler<HttpServerRequest> {
     private void doResponse(HttpServerRequest request, RpcResponse response, Serializer serializer){
         HttpServerResponse httpServerResponse = request.response().putHeader("content-type", "application/json");
         try{
-            byte[] serializer1 = serializer.serializer(response);
-            httpServerResponse.end(Buffer.buffer(serializer1));
+            byte[] bytes = serializer.serializer(response);
+            httpServerResponse.end(Buffer.buffer(bytes));
         } catch (IOException e) {
             e.printStackTrace();
             httpServerResponse.end(Buffer.buffer());
